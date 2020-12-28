@@ -1,0 +1,28 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: default-http-backend
+spec:
+  ports:
+  - port: 80
+    targetPort: http
+  selector:
+    app: default-http-backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: default-http-backend
+spec:
+  selector:
+    matchLabels:
+      app: default-http-backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: default-http-backend
+    spec:
+      containers:
+      - name: default-http-backend
+        image: lalitksahu22/myrepo_1:v1
