@@ -1,24 +1,60 @@
-apiVersion: networking.k8s.io/v1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: my-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.org/rewrites: "serviceName=express-service rewrite=/;serviceName=nginix-service rewrite=/"
 spec:
+  ingressClassName: nginx # use only with k8s version >= 1.18.0
+  # tls:
+  # - hosts:
+  #   - lalit.mydemo.com
+  #   secretName: my-secret
   rules:
-    - http:
-        paths:
-          - path: /express
-            pathType: Prefix
-            backend:
-              service:
-                name: express-service
-                port:
-                  number: 8082
-          - path: /nginx
-            pathType: Prefix
-            backend:
-              service:
-                name: nginix-service
-                port:
-                  number: 8082
+  - host: lalit.mydemo.com
+    http:
+      paths:
+      - path: /express
+        backend:
+          serviceName: express-service
+          servicePort: 8082
+      - path: /nginx
+        backend:
+          serviceName: nginix-service
+          servicePort: 8082
+  - host: "*"
+    http:
+      paths:
+      - path: /nginx
+        backend:
+          serviceName: express-service
+          servicePort: 8082
+      - path: /express
+        backend:
+          serviceName: nginix-service
+          servicePort: 8082
+
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: my-ingress
+#   annotations:
+#     nginx.ingress.kubernetes.io/rewrite-target: /
+# spec:
+#   rules:
+#     - http:
+#         paths:
+#           - path: /express
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: express-service
+#                 port:
+#                   number: 8082
+          # - path: /nginx
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: nginix-service
+          #       port:
+          #         number: 8082
