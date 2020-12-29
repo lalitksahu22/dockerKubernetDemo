@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{.Values.ingress.name}}
+  annotations:
+    nginx.org/rewrites: {{.Values.ingress.annotations.rewrites}}
+spec:
+  ingressClassName: nginx # use only with k8s version >= 1.18.0
+  tls:
+  - hosts:
+    - {{.Values.host1}}
+    secretName: {{.Values.ingress.secret.name}}
+  rules:
+  - host: {{.Values.host1}}
+    http:
+      paths:
+      - path: {{.Values.path.path1}}
+        backend:
+          serviceName: {{.Values.path.svc1}}
+          servicePort: {{.Values.path.port1}}
+      - path: {{.Values.path.path2}}
+        backend:
+          serviceName: {{.Values.path.svc2}}
+          servicePort: {{.Values.path.port2}}
+  - host: "{{.Values.host2}}"
+    http:
+      paths:
+      - path: {{.Values.path.path1}}
+        backend:
+          serviceName: {{.Values.path.svc2}}
+          servicePort: {{.Values.path.port2}}
+      - path: {{.Values.path.path2}}
+        backend:
+          serviceName: {{.Values.path.svc1}}
+          servicePort: {{.Values.path.port1}}

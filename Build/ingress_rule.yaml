@@ -22,7 +22,7 @@ spec:
         backend:
           serviceName: nginix-service
           servicePort: 8082
-  - host: "*"
+  - host: "*.mydemo.com"
     http:
       paths:
       - path: /nginx

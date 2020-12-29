@@ -1,0 +1,9 @@
+appName: nginxhelm
+replicaCount: 1
+image: "nginx"
+service:
+  port: 8082
+  targetPort: 80
+  type: "ClusterIP"
+ingress:
+  enable: false
