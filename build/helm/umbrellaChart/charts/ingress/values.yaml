@@ -15,7 +15,7 @@ path:
   path1: "/express"
   svc1: "expresshelm-service"
   port1: 8082
-  path2: "/nginix"
+  path2: "/nginx"
   svc2: "nginxhelm-service"
   port2: 8082
 path2:

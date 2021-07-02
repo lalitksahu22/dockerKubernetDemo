@@ -13,5 +13,5 @@ spec:
         app: "{{.Values.appName}}-app"
     spec:
       containers:
-      - name: "{{.Values.appName}}-app"
+      - name: "{{.Values.appName}}-container"
         image: "{{ .Values.image}}"
